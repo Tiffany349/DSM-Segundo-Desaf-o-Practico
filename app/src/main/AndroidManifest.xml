@@ -13,6 +13,10 @@
         android:theme="@style/Theme.Odiseo">
 
         <activity
+            android:name=".AgregarDestinoActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".RegistroActivity"
             android:exported="false" />
 

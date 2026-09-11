@@ -16,4 +16,19 @@
     <string name="error_login_campos">Todos los campos son obligatorios</string>
     <string name="error_login">Correo o contraseña incorrectos</string>
     <string name="login_exitoso">Inicio de sesión exitoso</string>
+
+    <string name="agregar_destino">Agregar destino</string>
+    <string name="nombre_destino">Nombre del destino</string>
+    <string name="pais">País</string>
+    <string name="precio">Precio del paquete</string>
+    <string name="descripcion">Descripción del viaje</string>
+    <string name="seleccionar_imagen">Seleccionar imagen</string>
+    <string name="ninguna_imagen">Ninguna imagen seleccionada</string>
+    <string name="guardar_destino">Guardar destino</string>
+
+    <string name="error_campos_destino">Todos los campos son obligatorios</string>
+    <string name="error_precio_destino">El precio debe ser mayor que 0</string>
+    <string name="error_descripcion_destino">La descripción debe tener al menos 20 caracteres</string>
+    <string name="error_imagen_destino">Debes seleccionar una imagen</string>
+    <string name="destino_validado">Destino validado correctamente</string>
 </resources>
