@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "342974738384",
+    "project_id": "odiseo-6fbfd",
+    "storage_bucket": "odiseo-6fbfd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342974738384:android:42be6205aaf087980a13d5",
+        "android_client_info": {
+          "package_name": "com.example.odiseo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoWxGmRXfw_ZLAWFFJVIQUyF7FViRKcaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
