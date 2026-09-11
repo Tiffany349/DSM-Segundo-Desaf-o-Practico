@@ -10,4 +10,10 @@
     <string name="registrarse">Registrarse</string>
     <string name="volver_login">Ya tengo una cuenta</string>
 
+    <string name="login_titulo">Iniciar sesión</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="crear_cuenta">¿No tienes una cuenta? Regístrate</string>
+    <string name="error_login_campos">Todos los campos son obligatorios</string>
+    <string name="error_login">Correo o contraseña incorrectos</string>
+    <string name="login_exitoso">Inicio de sesión exitoso</string>
 </resources>
