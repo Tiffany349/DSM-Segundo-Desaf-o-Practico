@@ -3,4 +3,11 @@
 
     <string name="app_name">Odiseo</string>
 
+    <string name="registro_titulo">Crear cuenta</string>
+    <string name="correo">Correo electrónico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="confirmar_contrasena">Confirmar contraseña</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="volver_login">Ya tengo una cuenta</string>
+
 </resources>
