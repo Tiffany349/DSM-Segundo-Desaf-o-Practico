@@ -344,7 +344,9 @@ APK/
 
 ##  Video de defensa
 Video de demostración y defensa del proyecto:
-**PENDIENTE: AGREGAR AQUÍ EL ENLACE DEL VIDEO**
+**https://udbedu-my.sharepoint.com/:f:/g/personal/br250073_alumno_udb_edu_sv/IgDNyUq9EyJVQY98eborV9rnARiqMwwaMSUtV4FRyK3ks6U?e=3uYemI**
+**https://drive.google.com/drive/folders/1Qt9rv4mM2GvoLWYP6kX-ImXSWYWAzKqN?usp=sharing**
+Por si alguno de los links de error adjunto una segunda opción
 
 El video presenta el funcionamiento general de la aplicación y las principales funcionalidades implementadas.
 
@@ -352,7 +354,7 @@ El video presenta el funcionamiento general de la aplicación y las principales 
 
 ##  Repositorio de GitHub
 Repositorio oficial del proyecto:
-**PENDIENTE: AGREGAR AQUÍ EL ENLACE DEL REPOSITORIO**
+**https://github.com/Tiffany349/DSM-Segundo-Desaf-o-Practico.git**
 
 ---
 
