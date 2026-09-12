@@ -31,4 +31,28 @@
     <string name="error_descripcion_destino">La descripción debe tener al menos 20 caracteres</string>
     <string name="error_imagen_destino">Debes seleccionar una imagen</string>
     <string name="destino_validado">Destino validado correctamente</string>
+
+    <string name="imagen_seleccionada">Imagen seleccionada</string>
+    <string name="subiendo_imagen">Subiendo imagen...</string>
+    <string name="error_subir_imagen">No se pudo subir la imagen</string>
+    <string name="destino_guardado">Destino guardado correctamente</string>
+    <string name="error_guardar_destino">No se pudo guardar el destino</string>
+
+    <string name="permiso_imagenes_denegado">No se concedió permiso para acceder a las imágenes</string>
+    <string name="permiso_imagenes_necesario">Se necesita permiso para seleccionar una imagen</string>
+    <string name="imagen_destino">Imagen del destino turístico</string>
+
+    <string-array name="paises_destino">
+        <item>El Salvador</item>
+        <item>Guatemala</item>
+        <item>Honduras</item>
+        <item>Nicaragua</item>
+        <item>Costa Rica</item>
+        <item>Panamá</item>
+        <item>México</item>
+        <item>Colombia</item>
+        <item>España</item>
+        <item>Estados Unidos</item>
+    </string-array>
+
 </resources>

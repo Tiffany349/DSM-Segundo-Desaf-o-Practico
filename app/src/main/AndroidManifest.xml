@@ -2,6 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permiso para Android 13 o superior -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <!-- Permiso para versiones anteriores de Android -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- Permiso para conexión a Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,11 +24,11 @@
         android:theme="@style/Theme.Odiseo">
 
         <activity
-            android:name=".AgregarDestinoActivity"
+            android:name=".RegistroActivity"
             android:exported="false" />
 
         <activity
-            android:name=".RegistroActivity"
+            android:name=".AgregarDestinoActivity"
             android:exported="false" />
 
         <activity
@@ -26,7 +37,6 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
