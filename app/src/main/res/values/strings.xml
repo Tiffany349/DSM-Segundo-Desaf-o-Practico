@@ -82,4 +82,12 @@
     <string name="cambios_guardados">Cambios guardados correctamente</string>
     <string name="error_guardar_cambios">No se pudieron guardar los cambios</string>
 
+    <string name="eliminar_destino">Eliminar destino</string>
+    <string name="confirmar_eliminacion">Confirmar eliminación</string>
+    <string name="mensaje_eliminar_destino">¿Está seguro de que desea eliminar el destino "%1$s"?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="destino_eliminado">Destino eliminado correctamente.</string>
+    <string name="error_eliminar_destino">No se pudo eliminar el destino.</string>
+
 </resources>

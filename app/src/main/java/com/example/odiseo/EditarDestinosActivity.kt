@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,20 +37,27 @@ class EditarDestinosActivity : AppCompatActivity() {
 
     private fun configurarRecyclerView() {
 
-        adapter = EditarDestinoAdapter(destinos) { destino ->
+        adapter = EditarDestinoAdapter(
+            destinos,
+            onEditarClick = { destino ->
 
-            val intent = Intent(
-                this,
-                EditarDestinoActivity::class.java
-            )
+                val intent = Intent(
+                    this,
+                    EditarDestinoActivity::class.java
+                )
 
-            intent.putExtra(
-                "destinoId",
-                destino.id
-            )
+                intent.putExtra(
+                    "destinoId",
+                    destino.id
+                )
 
-            startActivity(intent)
-        }
+                startActivity(intent)
+            },
+            onEliminarClick = { destino ->
+
+                mostrarDialogoEliminar(destino)
+            }
+        )
 
         rvEditarDestinos.layoutManager =
             LinearLayoutManager(this)
@@ -102,6 +110,47 @@ class EditarDestinosActivity : AppCompatActivity() {
                 }
 
                 progressBarEditar.visibility = View.GONE
+            }
+    }
+
+    private fun mostrarDialogoEliminar(destino: Destino) {
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.confirmar_eliminacion)
+            .setMessage(
+                getString(
+                    R.string.mensaje_eliminar_destino,
+                    destino.nombre
+                )
+            )
+            .setNegativeButton(R.string.cancelar, null)
+            .setPositiveButton(R.string.eliminar) { _, _ ->
+
+                eliminarDestino(destino)
+            }
+            .show()
+    }
+
+    private fun eliminarDestino(destino: Destino) {
+
+        db.collection("destinos")
+            .document(destino.id)
+            .delete()
+            .addOnSuccessListener {
+
+                Toast.makeText(
+                    this,
+                    R.string.destino_eliminado,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(
+                    this,
+                    R.string.error_eliminar_destino,
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 }

@@ -11,7 +11,8 @@ import com.bumptech.glide.Glide
 
 class EditarDestinoAdapter(
     private val destinos: List<Destino>,
-    private val onEditarClick: (Destino) -> Unit
+    private val onEditarClick: (Destino) -> Unit,
+    private val onEliminarClick: (Destino) -> Unit
 ) : RecyclerView.Adapter<EditarDestinoAdapter.EditarDestinoViewHolder>() {
 
     class EditarDestinoViewHolder(
@@ -32,6 +33,9 @@ class EditarDestinoAdapter(
 
         val btnEditarDestino: Button =
             itemView.findViewById(R.id.btnEditarDestino)
+
+        val btnEliminarDestino: Button =
+            itemView.findViewById(R.id.btnEliminarDestino)
     }
 
     override fun onCreateViewHolder(
@@ -79,6 +83,10 @@ class EditarDestinoAdapter(
 
         holder.btnEditarDestino.setOnClickListener {
             onEditarClick(destino)
+        }
+
+        holder.btnEliminarDestino.setOnClickListener {
+            onEliminarClick(destino)
         }
     }
 

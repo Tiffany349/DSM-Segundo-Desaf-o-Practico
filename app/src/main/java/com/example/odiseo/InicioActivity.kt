@@ -12,7 +12,6 @@ class InicioActivity : AppCompatActivity() {
     private lateinit var cardVerDestinos: MaterialCardView
     private lateinit var cardAgregarDestino: MaterialCardView
     private lateinit var cardEditarDestino: MaterialCardView
-    private lateinit var cardEliminarDestino: MaterialCardView
     private lateinit var btnCerrarSesion: Button
 
     private lateinit var auth: FirebaseAuth
@@ -26,10 +25,10 @@ class InicioActivity : AppCompatActivity() {
         cardVerDestinos = findViewById(R.id.cardVerDestinos)
         cardAgregarDestino = findViewById(R.id.cardAgregarDestino)
         cardEditarDestino = findViewById(R.id.cardEditarDestino)
-        cardEliminarDestino = findViewById(R.id.cardEliminarDestino)
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
 
         cardVerDestinos.setOnClickListener {
+
             val intent = Intent(
                 this,
                 ListaDestinosActivity::class.java
@@ -39,6 +38,7 @@ class InicioActivity : AppCompatActivity() {
         }
 
         cardAgregarDestino.setOnClickListener {
+
             val intent = Intent(
                 this,
                 AgregarDestinoActivity::class.java
@@ -48,6 +48,7 @@ class InicioActivity : AppCompatActivity() {
         }
 
         cardEditarDestino.setOnClickListener {
+
             val intent = Intent(
                 this,
                 EditarDestinosActivity::class.java
@@ -57,6 +58,7 @@ class InicioActivity : AppCompatActivity() {
         }
 
         btnCerrarSesion.setOnClickListener {
+
             auth.signOut()
 
             val intent = Intent(
