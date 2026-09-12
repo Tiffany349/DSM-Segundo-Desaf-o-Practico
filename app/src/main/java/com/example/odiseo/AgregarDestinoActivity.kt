@@ -17,6 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.firestore.FirebaseFirestore
+import java.io.DataOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.UUID
+import java.util.concurrent.Executors
 
 class AgregarDestinoActivity : AppCompatActivity() {
 
@@ -29,11 +35,16 @@ class AgregarDestinoActivity : AppCompatActivity() {
     private lateinit var tvImagenSeleccionada: TextView
     private lateinit var btnGuardarDestino: Button
 
+    private val db = FirebaseFirestore.getInstance()
+
     private var imagenSeleccionadaUri: Uri? = null
 
     companion object {
         private const val REQUEST_CODE_IMAGEN = 100
         private const val REQUEST_CODE_PERMISO_IMAGENES = 200
+
+        private const val CLOUDINARY_CLOUD_NAME = "yptipn1x"
+        private const val CLOUDINARY_UPLOAD_PRESET = "odiseo_images"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +68,7 @@ class AgregarDestinoActivity : AppCompatActivity() {
         }
 
         btnGuardarDestino.setOnClickListener {
-            validarDestino()
+            validarYGuardarDestino()
         }
     }
 
@@ -93,11 +104,8 @@ class AgregarDestinoActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED
 
         if (permisoConcedido) {
-
             abrirGaleria()
-
         } else {
-
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(permisoNecesario),
@@ -144,16 +152,13 @@ class AgregarDestinoActivity : AppCompatActivity() {
                 grantResults.isNotEmpty() &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
-
                 abrirGaleria()
-
             } else {
-
                 Toast.makeText(
                     this,
                     R.string.permiso_imagenes_denegado,
                     Toast.LENGTH_LONG
-                )
+                ).show()
             }
         }
     }
@@ -192,7 +197,7 @@ class AgregarDestinoActivity : AppCompatActivity() {
         }
     }
 
-    private fun validarDestino() {
+    private fun validarYGuardarDestino() {
 
         val nombre =
             etNombreDestino.text.toString().trim()
@@ -265,10 +270,288 @@ class AgregarDestinoActivity : AppCompatActivity() {
             return
         }
 
+        btnGuardarDestino.isEnabled = false
+
         Toast.makeText(
             this,
-            R.string.destino_validado,
+            R.string.subiendo_imagen,
             Toast.LENGTH_SHORT
         ).show()
+
+        subirImagenCloudinary()
+    }
+
+    private fun subirImagenCloudinary() {
+
+        val uri = imagenSeleccionadaUri ?: return
+
+        val executor = Executors.newSingleThreadExecutor()
+
+        executor.execute {
+
+            try {
+
+                val url = URL(
+                    "https://api.cloudinary.com/v1_1/" +
+                            "$CLOUDINARY_CLOUD_NAME/image/upload"
+                )
+
+                val boundary =
+                    "----OdiseoBoundary${UUID.randomUUID()}"
+
+                val connection =
+                    url.openConnection() as HttpURLConnection
+
+                connection.requestMethod = "POST"
+                connection.doOutput = true
+                connection.doInput = true
+
+                connection.setRequestProperty(
+                    "Content-Type",
+                    "multipart/form-data; boundary=$boundary"
+                )
+
+                val outputStream =
+                    DataOutputStream(
+                        connection.outputStream
+                    )
+
+                outputStream.writeBytes(
+                    "--$boundary\r\n"
+                )
+
+                outputStream.writeBytes(
+                    "Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n"
+                )
+
+                outputStream.writeBytes(
+                    "$CLOUDINARY_UPLOAD_PRESET\r\n"
+                )
+
+                outputStream.writeBytes(
+                    "--$boundary\r\n"
+                )
+
+                outputStream.writeBytes(
+                    "Content-Disposition: form-data; name=\"file\"; filename=\"odiseo_image.jpg\"\r\n"
+                )
+
+                outputStream.writeBytes(
+                    "Content-Type: image/jpeg\r\n\r\n"
+                )
+
+                val inputStream =
+                    contentResolver.openInputStream(uri)
+
+                if (inputStream == null) {
+                    throw Exception(
+                        "No se pudo leer la imagen"
+                    )
+                }
+
+                inputStream.use { input ->
+
+                    val buffer =
+                        ByteArray(4096)
+
+                    var bytesRead: Int
+
+                    while (
+                        input.read(buffer).also {
+                            bytesRead = it
+                        } != -1
+                    ) {
+
+                        outputStream.write(
+                            buffer,
+                            0,
+                            bytesRead
+                        )
+                    }
+                }
+
+                outputStream.writeBytes(
+                    "\r\n"
+                )
+
+                outputStream.writeBytes(
+                    "--$boundary--\r\n"
+                )
+
+                outputStream.flush()
+                outputStream.close()
+
+                val responseCode =
+                    connection.responseCode
+
+                if (responseCode in 200..299) {
+
+                    val response =
+                        connection.inputStream
+                            .bufferedReader()
+                            .use {
+                                it.readText()
+                            }
+
+                    val imageUrl =
+                        obtenerSecureUrl(response)
+
+                    runOnUiThread {
+                        guardarDestinoFirestore(
+                            imageUrl
+                        )
+                    }
+
+                } else {
+
+                    runOnUiThread {
+
+                        btnGuardarDestino.isEnabled =
+                            true
+
+                        Toast.makeText(
+                            this,
+                            R.string.error_subir_imagen,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+
+                runOnUiThread {
+
+                    btnGuardarDestino.isEnabled =
+                        true
+
+                    Toast.makeText(
+                        this,
+                        R.string.error_subir_imagen,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun obtenerSecureUrl(
+        response: String
+    ): String {
+
+        val marcador =
+            "\"secure_url\":\""
+
+        val inicio =
+            response.indexOf(marcador)
+
+        if (inicio == -1) {
+            throw Exception(
+                "No se encontró la URL de Cloudinary"
+            )
+        }
+
+        val inicioUrl =
+            inicio + marcador.length
+
+        val fin =
+            response.indexOf(
+                "\"",
+                inicioUrl
+            )
+
+        if (fin == -1) {
+            throw Exception(
+                "No se encontró el final de la URL"
+            )
+        }
+
+        return response.substring(
+            inicioUrl,
+            fin
+        )
+    }
+
+    private fun guardarDestinoFirestore(
+        imageUrl: String
+    ) {
+
+        val nombre =
+            etNombreDestino.text.toString().trim()
+
+        val pais =
+            actvPaisDestino.text.toString().trim()
+
+        val precio =
+            etPrecioDestino.text.toString()
+                .trim()
+                .toDouble()
+
+        val descripcion =
+            etDescripcionDestino.text.toString().trim()
+
+        val destino = hashMapOf(
+            "nombre" to nombre,
+            "pais" to pais,
+            "precio" to precio,
+            "descripcion" to descripcion,
+            "imagenUrl" to imageUrl
+        )
+
+        db.collection("destinos")
+            .add(destino)
+            .addOnSuccessListener {
+
+                Toast.makeText(
+                    this,
+                    R.string.destino_guardado,
+                    Toast.LENGTH_LONG
+                ).show()
+
+                limpiarFormulario()
+            }
+            .addOnFailureListener {
+
+                btnGuardarDestino.isEnabled =
+                    true
+
+                Toast.makeText(
+                    this,
+                    R.string.error_guardar_destino,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    private fun limpiarFormulario() {
+
+        etNombreDestino.text?.clear()
+
+        actvPaisDestino.setText(
+            "",
+            false
+        )
+
+        etPrecioDestino.text?.clear()
+
+        etDescripcionDestino.text?.clear()
+
+        imagenSeleccionadaUri = null
+
+        ivImagenDestino.setImageDrawable(
+            null
+        )
+
+        ivImagenDestino.visibility =
+            ImageView.GONE
+
+        tvImagenSeleccionada.text =
+            getString(
+                R.string.ninguna_imagen
+            )
+
+        btnGuardarDestino.isEnabled =
+            true
     }
 }

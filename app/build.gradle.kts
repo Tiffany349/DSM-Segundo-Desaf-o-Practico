@@ -5,6 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.odiseo"
+
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
@@ -48,7 +49,9 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    // Firebase
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")

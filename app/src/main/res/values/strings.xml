@@ -42,6 +42,10 @@
     <string name="permiso_imagenes_necesario">Se necesita permiso para seleccionar una imagen</string>
     <string name="imagen_destino">Imagen del destino turístico</string>
 
+    <string name="destinos_turisticos">Destinos turísticos</string>
+    <string name="precio_formato">Precio: $%.2f</string>
+    <string name="error_cargar_destinos">No se pudieron cargar los destinos: %1$s</string>
+
     <string-array name="paises_destino">
         <item>El Salvador</item>
         <item>Guatemala</item>
@@ -54,5 +58,28 @@
         <item>España</item>
         <item>Estados Unidos</item>
     </string-array>
+
+
+    <string name="bienvenida_odiseo">Bienvenido a Odiseo</string>
+    <string name="subtitulo_inicio">¿Qué deseas hacer?</string>
+
+    <string name="ver_destinos">Ver destinos</string>
+    <string name="ver_destinos_descripcion">Consulta los destinos turísticos disponibles.</string>
+
+    <string name="agregar_destino_descripcion">Agrega un nuevo destino turístico.</string>
+
+    <string name="editar_destinos">Editar destinos</string>
+    <string name="editar_destinos_descripcion">Modifica la información de un destino.</string>
+
+    <string name="eliminar_destinos">Eliminar destinos</string>
+    <string name="eliminar_destinos_descripcion">Elimina un destino del catálogo.</string>
+
+    <string name="cerrar_sesion">Cerrar sesión</string>
+
+    <string name="editar_destino">Editar destino</string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="error_cargar_destino">No se pudo cargar el destino</string>
+    <string name="cambios_guardados">Cambios guardados correctamente</string>
+    <string name="error_guardar_cambios">No se pudieron guardar los cambios</string>
 
 </resources>

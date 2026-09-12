@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permiso para Android 13 o superior -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <!-- Permiso para versiones anteriores de Android -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> <!-- Permiso para versiones anteriores de Android -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-
-    <!-- Permiso para conexión a Internet -->
+        android:maxSdkVersion="32" /> <!-- Permiso para conexión a Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -22,26 +17,40 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Odiseo">
+        <activity
+            android:name=".EditarDestinosActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".EditarDestinoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditarDestinoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditarDestinosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InicioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaDestinosActivity"
+            android:exported="false" />
         <activity
             android:name=".RegistroActivity"
             android:exported="false" />
-
         <activity
             android:name=".AgregarDestinoActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>

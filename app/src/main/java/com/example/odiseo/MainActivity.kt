@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    val intent = Intent(this, AgregarDestinoActivity::class.java)
+                    val intent = Intent(this, InicioActivity::class.java)
                     startActivity(intent)
                     finish()
 
