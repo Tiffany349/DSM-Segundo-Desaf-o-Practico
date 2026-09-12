@@ -34,8 +34,7 @@
                 android:id="@+id/tvNombreDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primary_text"
-                android:textSize="22sp"
+                android:textColor="@color/white"                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.Button
 
 class EditarDestinosActivity : AppCompatActivity() {
 
@@ -27,6 +28,11 @@ class EditarDestinosActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_editar_destinos)
 
+        findViewById<Button>(R.id.btnVolverMenu).setOnClickListener {
+            val intent = Intent(this, InicioActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
         rvEditarDestinos = findViewById(R.id.rvEditarDestinos)
 
         progressBarEditar = findViewById(R.id.progressBarEditar)

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Intent
+import android.widget.Button
 
 class ListaDestinosActivity : AppCompatActivity() {
 
@@ -26,6 +28,12 @@ class ListaDestinosActivity : AppCompatActivity() {
         setContentView(
             R.layout.activity_lista_destinos
         )
+
+        findViewById<Button>(R.id.btnVolverMenu).setOnClickListener {
+            val intent = Intent(this, InicioActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
 
         rvDestinos = findViewById(
             R.id.rvDestinos

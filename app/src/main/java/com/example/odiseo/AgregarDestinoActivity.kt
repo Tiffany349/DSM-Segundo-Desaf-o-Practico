@@ -8,9 +8,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors
 class AgregarDestinoActivity : AppCompatActivity() {
 
     private lateinit var etNombreDestino: TextInputEditText
-    private lateinit var actvPaisDestino: AutoCompleteTextView
+    private lateinit var spinnerPaisDestino: Spinner
     private lateinit var etPrecioDestino: TextInputEditText
     private lateinit var etDescripcionDestino: TextInputEditText
     private lateinit var btnSeleccionarImagen: Button
@@ -52,8 +52,15 @@ class AgregarDestinoActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_agregar_destino)
 
+        findViewById<Button>(R.id.btnVolverMenu).setOnClickListener {
+            val intent = Intent(this, InicioActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
+
         etNombreDestino = findViewById(R.id.etNombreDestino)
-        actvPaisDestino = findViewById(R.id.actvPaisDestino)
+        spinnerPaisDestino = findViewById(R.id.spinnerPaisDestino)
         etPrecioDestino = findViewById(R.id.etPrecioDestino)
         etDescripcionDestino = findViewById(R.id.etDescripcionDestino)
         btnSeleccionarImagen = findViewById(R.id.btnSeleccionarImagen)
@@ -80,11 +87,15 @@ class AgregarDestinoActivity : AppCompatActivity() {
 
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_spinner_item,
             paises
         )
 
-        actvPaisDestino.setAdapter(adapter)
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        spinnerPaisDestino.adapter = adapter
     }
 
     private fun verificarPermisoYSeleccionarImagen() {
@@ -203,7 +214,7 @@ class AgregarDestinoActivity : AppCompatActivity() {
             etNombreDestino.text.toString().trim()
 
         val pais =
-            actvPaisDestino.text.toString().trim()
+            spinnerPaisDestino.selectedItem?.toString()?.trim() ?: ""
 
         val precioTexto =
             etPrecioDestino.text.toString().trim()
@@ -481,7 +492,7 @@ class AgregarDestinoActivity : AppCompatActivity() {
             etNombreDestino.text.toString().trim()
 
         val pais =
-            actvPaisDestino.text.toString().trim()
+            spinnerPaisDestino.selectedItem?.toString()?.trim() ?: ""
 
         val precio =
             etPrecioDestino.text.toString()
@@ -528,10 +539,7 @@ class AgregarDestinoActivity : AppCompatActivity() {
 
         etNombreDestino.text?.clear()
 
-        actvPaisDestino.setText(
-            "",
-            false
-        )
+        spinnerPaisDestino.setSelection(0)
 
         etPrecioDestino.text?.clear()
 
