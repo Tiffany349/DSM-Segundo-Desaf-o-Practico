@@ -90,4 +90,9 @@
     <string name="destino_eliminado">Destino eliminado correctamente.</string>
     <string name="error_eliminar_destino">No se pudo eliminar el destino.</string>
 
+    <string name="imagen_actual">Imagen actual</string>
+    <string name="cambiar_imagen">Cambiar imagen</string>
+    <string name="nueva_imagen_seleccionada">Nueva imagen seleccionada</string>
+    <string name="volver_menu">Volver al menú</string>
+
 </resources>
