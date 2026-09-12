@@ -24,17 +24,11 @@ class EditarDestinosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_editar_destinos
-        )
+        setContentView(R.layout.activity_editar_destinos)
 
-        rvEditarDestinos = findViewById(
-            R.id.rvEditarDestinos
-        )
+        rvEditarDestinos = findViewById(R.id.rvEditarDestinos)
 
-        progressBarEditar = findViewById(
-            R.id.progressBarEditar
-        )
+        progressBarEditar = findViewById(R.id.progressBarEditar)
 
         configurarRecyclerView()
         cargarDestinos()
@@ -42,9 +36,7 @@ class EditarDestinosActivity : AppCompatActivity() {
 
     private fun configurarRecyclerView() {
 
-        adapter = EditarDestinoAdapter(
-            destinos
-        ) { destino ->
+        adapter = EditarDestinoAdapter(destinos) { destino ->
 
             val intent = Intent(
                 this,
@@ -67,57 +59,49 @@ class EditarDestinosActivity : AppCompatActivity() {
 
     private fun cargarDestinos() {
 
-        progressBarEditar.visibility =
-            View.VISIBLE
+        progressBarEditar.visibility = View.VISIBLE
 
         db.collection("destinos")
-            .get()
-            .addOnSuccessListener { result ->
+            .addSnapshotListener { result, error ->
 
-                destinos.clear()
+                if (error != null) {
 
-                for (document in result) {
+                    progressBarEditar.visibility = View.GONE
 
-                    val destino = Destino(
-                        id = document.id,
-                        nombre = document.getString(
-                            "nombre"
-                        ) ?: "",
-                        pais = document.getString(
-                            "pais"
-                        ) ?: "",
-                        precio = document.getDouble(
-                            "precio"
-                        ) ?: 0.0,
-                        descripcion = document.getString(
-                            "descripcion"
-                        ) ?: "",
-                        imagenUrl = document.getString(
-                            "imagenUrl"
-                        ) ?: ""
-                    )
+                    Toast.makeText(
+                        this,
+                        getString(
+                            R.string.error_cargar_destinos,
+                            error.message ?: ""
+                        ),
+                        Toast.LENGTH_LONG
+                    ).show()
 
-                    destinos.add(destino)
+                    return@addSnapshotListener
                 }
 
-                adapter.notifyDataSetChanged()
+                if (result != null) {
 
-                progressBarEditar.visibility =
-                    View.GONE
-            }
-            .addOnFailureListener { error ->
+                    destinos.clear()
 
-                progressBarEditar.visibility =
-                    View.GONE
+                    for (document in result.documents) {
 
-                Toast.makeText(
-                    this,
-                    getString(
-                        R.string.error_cargar_destinos,
-                        error.message ?: ""
-                    ),
-                    Toast.LENGTH_LONG
-                ).show()
+                        val destino = Destino(
+                            id = document.id,
+                            nombre = document.getString("nombre") ?: "",
+                            pais = document.getString("pais") ?: "",
+                            precio = document.getDouble("precio") ?: 0.0,
+                            descripcion = document.getString("descripcion") ?: "",
+                            imagenUrl = document.getString("imagenUrl") ?: ""
+                        )
+
+                        destinos.add(destino)
+                    }
+
+                    adapter.notifyDataSetChanged()
+                }
+
+                progressBarEditar.visibility = View.GONE
             }
     }
 }
